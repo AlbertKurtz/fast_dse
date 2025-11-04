@@ -50,7 +50,7 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/AlbertKurtz/rust_py_lib"
+Repository = "https://github.com/AlbertKurtz/fast_dse"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]

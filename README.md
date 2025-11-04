@@ -89,8 +89,8 @@ plt.show()
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AlbertKurtz/rust_py_lib.git
-cd rust_py_lib
+git clone https://github.com/AlbertKurtz/fast_dse.git
+cd fast_dse
 ```
 
 2. Create a virtual environment and install with dev dependencies:
