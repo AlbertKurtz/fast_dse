@@ -79,37 +79,13 @@ plt.show()
 
 ## Installation
 
-### From PyPI (recommended for users)
-
-Once published, install with **uv** (preferred):
-
-```bash
-uv pip install build_crystal
-```
-
-To run the demo script, you'll also need matplotlib:
-
-```bash
-uv pip install matplotlib
-```
-
-Or using pip:
-
-```bash
-pip install build_crystal matplotlib
-```
-
-> **Note:** [uv](https://github.com/astral-sh/uv) is a fast Python package installer written in Rust. Install it with: `pip install uv` or see [installation instructions](https://github.com/astral-sh/uv#installation).
-
-### From source (for development)
-
 **Prerequisites:**
 - Rust toolchain (stable) — install via https://rustup.rs
 - Python 3.8+ (matching your environment)
-- **uv** (recommended) — install via `pip install uv` or see https://github.com/astral-sh/uv
+- **uv** (recommended) — a fast Python package installer and environment manager written in Rust. Install via `pip install uv` or see https://github.com/astral-sh/uv
 - On Windows, ensure your Python architecture (e.g., 64-bit) matches the Rust toolchain target. Using a recent MSVC build chain via Visual Studio Build Tools is recommended.
 
-**Development setup with uv (recommended):**
+**Setup with uv (recommended):**
 
 1. Clone the repository:
 ```bash
@@ -149,19 +125,13 @@ uv pip install target/wheels/<your_wheel_name>.whl
 
 ## Running the demo
 
-After installation with dev dependencies (make sure your virtual environment is activated if you created one):
+After installation with dev dependencies (make sure your virtual environment is activated):
 
 ```bash
 python main.py
 ```
 
 This will open a plot window comparing the intensity for a spherical and cubic crystal with the parameters from the script.
-
-If you haven't installed dev dependencies, you can run the demo with:
-
-```bash
-uv run --with matplotlib --with build_crystal main.py
-```
 
 ## Performance notes
 
@@ -171,9 +141,9 @@ uv run --with matplotlib --with build_crystal main.py
 ## Troubleshooting
 
 - **ImportError: No module named `build_crystal`**
-  - Make sure you installed the package (`uv pip install build_crystal` or `uv pip install -e .[dev]` for development)
+  - Make sure you installed the package with `uv pip install -e .[dev]`
   - Verify you're using the correct Python environment: `python -c "import sys; print(sys.executable)"`
-  - If using a virtual environment, make sure it's activated
+  - Make sure your virtual environment is activated
 
 - **Linker/build errors on Windows**
   - Ensure you have the MSVC toolchain installed via Visual Studio Build Tools
