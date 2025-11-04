@@ -1,6 +1,6 @@
 # Rust-Python Crystal Scattering Library
 
-This project exposes high-performance Rust functions to Python using PyO3 and maturin. It provides simple utilities to generate 3D atomic point lattices and compute a Debye scattering-like intensity using parallel Rust code. A small Python script demonstrates how to call the Rust functions and plot the results.
+This project exposes high-performance Rust functions to Python using PyO3 and maturin. It provides **simplified** utilities to generate 3D atomic point lattices (simple cubic only) and compute a Debye scattering-like intensity using parallel Rust code. This is an educational/demonstration project showing Rust-Python integration for scientific computing.
 
 - Rust module name (as seen from Python): `build_crystal`
 - Python demo entry point: `main.py`
@@ -81,26 +81,35 @@ plt.show()
 
 ### From PyPI (recommended for users)
 
-Once published, install with:
+Once published, install with **uv** (preferred):
 
 ```bash
-pip install build_crystal
+uv pip install build_crystal
 ```
 
 To run the demo script, you'll also need matplotlib:
 
 ```bash
-pip install matplotlib
+uv pip install matplotlib
 ```
+
+Or using pip:
+
+```bash
+pip install build_crystal matplotlib
+```
+
+> **Note:** [uv](https://github.com/astral-sh/uv) is a fast Python package installer written in Rust. Install it with: `pip install uv` or see [installation instructions](https://github.com/astral-sh/uv#installation).
 
 ### From source (for development)
 
 **Prerequisites:**
 - Rust toolchain (stable) — install via https://rustup.rs
 - Python 3.8+ (matching your environment)
+- **uv** (recommended) — install via `pip install uv` or see https://github.com/astral-sh/uv
 - On Windows, ensure your Python architecture (e.g., 64-bit) matches the Rust toolchain target. Using a recent MSVC build chain via Visual Studio Build Tools is recommended.
 
-**Development setup:**
+**Development setup with uv (recommended):**
 
 1. Clone the repository:
 ```bash
@@ -108,33 +117,51 @@ git clone https://github.com/AlbertKurtz/rust_py_lib.git
 cd rust_py_lib
 ```
 
-2. Install in development mode with dev dependencies (includes maturin and matplotlib):
+2. Create a virtual environment and install with dev dependencies:
 ```bash
+uv venv
+# On Windows:
+.venv\Scripts\activate
+# On macOS/Linux:
+source .venv/bin/activate
+
+uv pip install -e .[dev]
+```
+
+This will compile the Rust extension and install it into your virtual environment so you can immediately `import build_crystal`.
+
+**Alternative with pip:**
+
+```bash
+python -m venv .venv
+# Activate virtual environment (see above)
 pip install -e .[dev]
 ```
 
-This will compile the Rust extension and install it into your current Python environment so you can immediately `import build_crystal`.
-
-**Alternative: Build a wheel manually:**
+**Building a wheel manually:**
 
 ```bash
-pip install maturin
+uv pip install maturin
 maturin build --release
 # find the .whl in target/wheels/ and install it
-pip install target/wheels/<your_wheel_name>.whl
+uv pip install target/wheels/<your_wheel_name>.whl
 ```
-
-Note: If you manage Python with virtual environments, activate the env before installation.
 
 ## Running the demo
 
-After installation with dev dependencies:
+After installation with dev dependencies (make sure your virtual environment is activated if you created one):
 
 ```bash
 python main.py
 ```
 
 This will open a plot window comparing the intensity for a spherical and cubic crystal with the parameters from the script.
+
+If you haven't installed dev dependencies, you can run the demo with:
+
+```bash
+uv run --with matplotlib --with build_crystal main.py
+```
 
 ## Performance notes
 
@@ -144,15 +171,16 @@ This will open a plot window comparing the intensity for a spherical and cubic c
 ## Troubleshooting
 
 - **ImportError: No module named `build_crystal`**
-  - Make sure you installed the package (`pip install build_crystal` or `pip install -e .[dev]` for development)
+  - Make sure you installed the package (`uv pip install build_crystal` or `uv pip install -e .[dev]` for development)
   - Verify you're using the correct Python environment: `python -c "import sys; print(sys.executable)"`
+  - If using a virtual environment, make sure it's activated
 
 - **Linker/build errors on Windows**
   - Ensure you have the MSVC toolchain installed via Visual Studio Build Tools
   - Verify that Rust targets your Python architecture (both should be 64-bit or both 32-bit)
 
 - **ImportError: No module named 'matplotlib'** (when running demo)
-  - Install matplotlib: `pip install matplotlib` or use dev dependencies: `pip install -e .[dev]`
+  - Install matplotlib: `uv pip install matplotlib` or use dev dependencies: `uv pip install -e .[dev]`
 
 ## License
 
