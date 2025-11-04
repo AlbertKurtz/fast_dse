@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "build_crystal"
-description = "High-performance Rust library for generating 3D crystal lattices and computing Debye scattering intensities"
+description = "High-performance Rust library for generating 3D crystal lattices (simple cubic) and computing Debye scattering intensities (monoatomic crystals)"
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }

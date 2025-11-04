@@ -11,6 +11,7 @@ This project exposes high-performance Rust functions to Python using PyO3 and ma
 - `main.py` — Example Python script that calls the Rust functions and plots results
 - `pyproject.toml` — maturin/PyO3 build configuration
 - `Cargo.toml` — Rust crate configuration
+- `LICENSE` — MIT License
 
 ## What the library provides (`src/lib.rs`)
 
@@ -32,6 +33,16 @@ The Rust library defines a Python module named `build_crystal` with two function
    - Returns: a list of intensities with length `floor((max_q - min_q) / q_step)`.
 
 These functions are exported to Python with PyO3 via the `#[pymodule]` named `build_crystal`.
+
+## Important Limitations
+
+This is a **simplified implementation** intended for educational purposes and basic simulations:
+
+- **Crystal structures**: The `crystal()` function generates simple cubic lattices only. It does **not** support common crystal structures like FCC (face-centered cubic), BCC (body-centered cubic), HCP (hexagonal close-packed), or other Bravais lattices.
+
+- **Atomic scattering factors**: The `dse_optimized()` function does **not** account for atomic scattering factors (form factors). This implementation is only accurate (up to a coefficient) for **monoatomic crystals** with identical scattering atoms. For real materials with different atom types or accurate X-ray/neutron scattering calculations, proper form factors must be included.
+
+For production use in materials science or crystallography, consider using established libraries like [pymatgen](https://pymatgen.org/), [ASE](https://wiki.fysik.dtu.dk/ase/), or [diffpy](https://www.diffpy.org/).
 
 ## Demo script (`main.py`)
 
@@ -66,43 +77,58 @@ plt.title("Debye-like Scattering Intensity")
 plt.show()
 ```
 
-## Prerequisites
+## Installation
 
+### From PyPI (recommended for users)
+
+Once published, install with:
+
+```bash
+pip install build_crystal
+```
+
+To run the demo script, you'll also need matplotlib:
+
+```bash
+pip install matplotlib
+```
+
+### From source (for development)
+
+**Prerequisites:**
 - Rust toolchain (stable) — install via https://rustup.rs
 - Python 3.8+ (matching your environment)
-- maturin — `pip install maturin`
-- NumPy and Matplotlib for the demo — `pip install numpy matplotlib`
+- On Windows, ensure your Python architecture (e.g., 64-bit) matches the Rust toolchain target. Using a recent MSVC build chain via Visual Studio Build Tools is recommended.
 
-On Windows, ensure that your Python architecture (e.g., 64-bit) matches the Rust toolchain target. Using a recent MSVC build chain via Visual Studio Build Tools is recommended.
+**Development setup:**
 
-## Build and develop with maturin
-
-This project is configured for maturin with PyO3.
-
-Option A — develop in-place (editable install):
-
+1. Clone the repository:
 ```bash
-# from the project root
-maturin develop
+git clone https://github.com/AlbertKurtz/rust_py_lib.git
+cd rust_py_lib
 ```
 
-This compiles the Rust extension and installs it into your current Python environment so you can immediately `import build_crystal`.
+2. Install in development mode with dev dependencies (includes maturin and matplotlib):
+```bash
+pip install -e .[dev]
+```
 
-Option B — build a wheel:
+This will compile the Rust extension and install it into your current Python environment so you can immediately `import build_crystal`.
+
+**Alternative: Build a wheel manually:**
 
 ```bash
-maturin build
+pip install maturin
+maturin build --release
 # find the .whl in target/wheels/ and install it
-pip install target\wheels\<your_wheel_name>.whl  # Windows
-# or
-pip install target/wheels/<your_wheel_name>.whl   # macOS/Linux
+pip install target/wheels/<your_wheel_name>.whl
 ```
 
-Note: If you manage Python with virtual environments, activate the env before running `maturin`.
+Note: If you manage Python with virtual environments, activate the env before installation.
 
 ## Running the demo
 
-After building with `maturin develop` and installing Python dependencies:
+After installation with dev dependencies:
 
 ```bash
 python main.py
@@ -117,12 +143,16 @@ This will open a plot window comparing the intensity for a spherical and cubic c
 
 ## Troubleshooting
 
-- ImportError: No module named `build_crystal`
-  - Make sure you ran `maturin develop` (or installed the built wheel) in the same Python environment you use to run `main.py`.
-- Linker/build errors on Windows
-  - Ensure you have the MSVC toolchain and that Rust targets your Python architecture.
-- Mismatched Python environment
-  - `python -c "import sys; print(sys.executable)"` to confirm which interpreter you are using.
+- **ImportError: No module named `build_crystal`**
+  - Make sure you installed the package (`pip install build_crystal` or `pip install -e .[dev]` for development)
+  - Verify you're using the correct Python environment: `python -c "import sys; print(sys.executable)"`
+
+- **Linker/build errors on Windows**
+  - Ensure you have the MSVC toolchain installed via Visual Studio Build Tools
+  - Verify that Rust targets your Python architecture (both should be 64-bit or both 32-bit)
+
+- **ImportError: No module named 'matplotlib'** (when running demo)
+  - Install matplotlib: `pip install matplotlib` or use dev dependencies: `pip install -e .[dev]`
 
 ## License
 
