@@ -16,5 +16,7 @@ if __name__ == "__main__":
 
     plt.plot(q_array, intensity, label="sphere")
     plt.plot(q_array, intensity_cube, label="cube")
+    plt.xlabel(r"$q = 4\pi sin(\theta)/\lambda$ $(1/\AA)$")
+    plt.ylabel("Intensity")
     plt.legend()
     plt.show()
