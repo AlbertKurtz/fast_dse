@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 if __name__ == "__main__":
-    lattice_param = 3.89
-    length = 30
+    lattice_param = 3.89  # nanometers
+    length = 50  # nanometers
     sphere_crystal = crystal("sphere", lattice_param, length)
     cube_crystal = crystal("cube", lattice_param, length)
     q_0 = 1
@@ -18,4 +18,3 @@ if __name__ == "__main__":
     plt.plot(q_array, intensity_cube, label="cube")
     plt.legend()
     plt.show()
-  

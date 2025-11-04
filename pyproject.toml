@@ -4,19 +4,54 @@ build-backend = "maturin"
 
 [project]
 name = "build_crystal"
+description = "High-performance Rust library for generating 3D crystal lattices and computing Debye scattering intensities"
+readme = "README.md"
 requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Alberto Flor" }
+]
+keywords = [
+    "crystal",
+    "scattering",
+    "debye",
+    "crystallography",
+    "materials-science",
+    "computational-physics",
+    "rust",
+    "pyo3",
+]
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Chemistry",
 ]
 dynamic = ["version"]
 dependencies = [
+    "numpy>=1.24.4",
+]
+
+[project.optional-dependencies]
+dev = [
     "matplotlib>=3.7.5",
     "maturin>=1.9.4",
-    "numpy>=1.24.4",
-    "tomli>=2.2.1",
 ]
+
+[project.urls]
+Repository = "https://github.com/AlbertKurtz/rust_py_lib"
+
 [tool.maturin]
 features = ["pyo3/extension-module"]
 
