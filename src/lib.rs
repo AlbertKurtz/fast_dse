@@ -5,7 +5,7 @@ use rayon::prelude::*;
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn build_crystal(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn fast_dse(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(crystal, m)?)?;
     m.add_function(wrap_pyfunction!(dse_optimized, m)?)?;
     Ok(())

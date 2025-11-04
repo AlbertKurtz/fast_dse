@@ -1,4 +1,4 @@
-from build_crystal import crystal, dse_optimized
+from fast_dse import crystal, dse_optimized
 import matplotlib.pyplot as plt
 import numpy as np
 

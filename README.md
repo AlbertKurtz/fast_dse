@@ -1,8 +1,8 @@
-# Rust-Python Crystal Scattering Library
+# fast_dse: Fast Debye Scattering Equation
 
 This project exposes high-performance Rust functions to Python using PyO3 and maturin. It provides **simplified** utilities to generate 3D atomic point lattices (simple cubic only) and compute a Debye scattering-like intensity using parallel Rust code. This is an educational/demonstration project showing Rust-Python integration for scientific computing.
 
-- Rust module name (as seen from Python): `build_crystal`
+- Rust module name (as seen from Python): `fast_dse`
 - Python demo entry point: `main.py`
 
 ## Contents
@@ -15,7 +15,7 @@ This project exposes high-performance Rust functions to Python using PyO3 and ma
 
 ## What the library provides (`src/lib.rs`)
 
-The Rust library defines a Python module named `build_crystal` with two functions:
+The Rust library defines a Python module named `fast_dse` with two functions:
 
 1) `crystal(shape: str, lattice_param: float, length: float) -> list[list[float]]`
    - Generates 3D lattice points with a simple step equal to `lattice_param`.
@@ -32,7 +32,7 @@ The Rust library defines a Python module named `build_crystal` with two function
      - Uses Rayon for parallelism over `q` values.
    - Returns: a list of intensities with length `floor((max_q - min_q) / q_step)`.
 
-These functions are exported to Python with PyO3 via the `#[pymodule]` named `build_crystal`.
+These functions are exported to Python with PyO3 via the `#[pymodule]` named `fast_dse`.
 
 ## Important Limitations
 
@@ -47,14 +47,14 @@ For production use in materials science or crystallography, consider using estab
 ## Demo script (`main.py`)
 
 `main.py` shows how to:
-- Import the Rust functions from Python: `from build_crystal import crystal, dse_optimized`
+- Import the Rust functions from Python: `from fast_dse import crystal, dse_optimized`
 - Generate two crystals (sphere and cube)
 - Compute intensities for a `q` range
 - Plot both curves using matplotlib
 
 Snippet:
 ```python
-from build_crystal import crystal, dse_optimized
+from fast_dse import crystal, dse_optimized
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -104,7 +104,7 @@ source .venv/bin/activate
 uv pip install -e .[dev]
 ```
 
-This will compile the Rust extension and install it into your virtual environment so you can immediately `import build_crystal`.
+This will compile the Rust extension and install it into your virtual environment so you can immediately `import fast_dse`.
 
 **Alternative with pip:**
 
@@ -140,7 +140,7 @@ This will open a plot window comparing the intensity for a spherical and cubic c
 
 ## Troubleshooting
 
-- **ImportError: No module named `build_crystal`**
+- **ImportError: No module named `fast_dse`**
   - Make sure you installed the package with `uv pip install -e .[dev]`
   - Verify you're using the correct Python environment: `python -c "import sys; print(sys.executable)"`
   - Make sure your virtual environment is activated

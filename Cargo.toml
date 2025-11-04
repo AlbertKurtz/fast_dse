@@ -1,5 +1,5 @@
 [package]
-name = "build_crystal"
+name = "fast_dse"
 version = "0.1.0"
 edition = "2021"
 authors = ["Alberto Flor"]
@@ -7,12 +7,12 @@ description = "High-performance Rust library for generating 3D crystal lattices 
 license = "MIT"
 repository = "https://github.com/AlbertKurtz/rust_py_lib"
 homepage = "https://github.com/AlbertKurtz/rust_py_lib"
-documentation = "https://docs.rs/build_crystal"
+documentation = "https://docs.rs/fast_dse"
 keywords = ["crystal", "scattering", "debye", "crystallography", "physics"]
 categories = ["science", "algorithms"]
 readme = "README.md"
 [lib]
-name = "build_crystal"
+name = "fast_dse"
 crate-type = ["cdylib"]
 
 [dependencies]
