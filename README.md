@@ -2,6 +2,10 @@
 
 This project exposes high-performance Rust functions to Python using PyO3 and maturin. It provides **simplified** utilities to generate 3D atomic point lattices (simple cubic only) and compute a Debye scattering-like intensity using parallel Rust code. This is an educational/demonstration project showing Rust-Python integration for scientific computing.
 
+
+
+
+
 - Rust module name (as seen from Python): `fast_dse`
 - Python demo entry point: `main.py`
 
@@ -26,6 +30,12 @@ The Rust library defines a Python module named `fast_dse` with two functions:
 
 2) `dse_optimized(min_q: float, max_q: float, q_step: float, crystal: list[list[float]]) -> list[float]`
    - Computes an intensity profile over `q` in `[min_q, max_q)` with spacing `q_step`.
+   - The intensity is calculated using the simplified Debye scattering equation:
+
+     $$I(q) = \sum_{i=1}^{N} \sum_{j=1}^{N} \frac{\sin(q \cdot r_{ij})}{q \cdot r_{ij}}$$
+
+     where $N$ is the number of atoms and $r_{ij}$ is the distance between atoms $i$ and $j$.
+
    - Internally:
      - Precomputes all pairwise squared distances between points in `crystal`.
      - For each `q`, sums `sin(q * r) / (q * r)` over all pairs, with `r=0` contributing `1.0`.
